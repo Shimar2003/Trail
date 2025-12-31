@@ -9,10 +9,8 @@ on:
 
 env:
   DOTNET_VERSION: '8.0.x'
-  PROJECT_PATH: 'src/WebApi/WebApi.csproj'
-  TEST_PROJECT_PATH: 'tests/WebApi.Tests/WebApi.Tests.csproj'
-  CONTAINER_REGISTRY: 'ghcr.io'
-  IMAGE_NAME: ${{ github.repository }}
+  PROJECT_PATH: './MyFirstApi.csproj'    # Use YOUR project name
+  TEST_PROJECT_PATH: ''                   # Leave empty if no tests
 
 jobs:
   # Job 1: Build and Test
