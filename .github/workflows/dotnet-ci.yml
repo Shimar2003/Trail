@@ -1,0 +1,45 @@
+name: .NET CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Step 1: Get the code
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    # Step 2: Setup .NET
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+    
+    # Step 3: Restore dependencies
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    # Step 4: Build
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    
+    # Step 5: Run tests
+    - name: Test
+      run: dotnet test --configuration Release --no-build --verbosity normal
+    
+    # Step 6: Publish
+    - name: Publish
+      run: dotnet publish HelloWorld/HelloWorld.csproj -c Release -o ./publish
+    
+    # Step 7: Upload artifact (optional)
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: hello-world-app
+        path: ./publish
